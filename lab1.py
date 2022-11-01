@@ -22,35 +22,28 @@ T = [signal.TransferFunction(1, [1., a[i], b[i]]) for i in range(np.size(a))]
 t = list()
 y = list()
 
-figure, axis = plt.subplots((len(T) // 2), 2)
-figure.subplots_adjust(hspace=1.2)
-figure2, axis2 = plt.subplots((len(roots) // 2), 2)
-figure2.subplots_adjust(hspace=1.2)
 for i in range(len(T)):
+    plt.figure(i)
+    figure, axis = plt.subplots(2, 1)
+    figure.subplots_adjust(hspace=0.4)
+    figure.subplots_adjust(wspace=0.8)
+    figure.set_size_inches(12, 8)
     tp, yp = signal.step(T[i], T=np.linspace(0., 15., num=2500), N=1000)
     t.append(tp)
     y.append(yp)
+    
+    figure.suptitle("a = '%.2f', b = '%.2f', delta = '%.2f'" % (a[i], b[i], delt[i]), fontsize='xx-large')
+    axis[0].plot(t[i], y[i])
+    axis[0].set_xlabel('Time [s]')
+    axis[0].set_ylabel('Amplitude')
+    axis[1].set_xlabel('Re')
+    axis[1].set_ylabel('Im')
+    axis[0].grid()
 
-    axis[i//2, i % 2].plot(t[i], y[i])
-    axis[i//2, i % 2].set_xlabel('Time [s]')
-    axis[i//2, i % 2].set_ylabel('Amplitude')
-    axis2[i//2, i % 2].set_xlabel('Re')
-    axis2[i//2, i % 2].set_ylabel('Im')
-    if delt[i] < 0.:
-        axis[i//2, i % 2].set_title("Delta < 0")
-        axis2[i//2, i % 2].set_title("Delta < 0")
-    elif delt[i] == 0.:
-        axis[i//2, i % 2].set_title("Delta == 0")
-        axis2[i//2, i % 2].set_title("Delta == 0")
-    else:
-        axis[i//2, i % 2].set_title('Delta > 0')
-        axis2[i//2, i % 2].set_title("Delta > 0")
-    axis[i//2, i % 2].grid()
+    axis[1].plot(np.real(roots[i]), np.imag(roots[i]), 'bo')
+    axis[1].grid()
+    figure.savefig('figure%d.png' % i)
 
-    axis2[i//2, i % 2].plot(np.real(roots[i]), np.imag(roots[i]), 'bo')
-    axis2[i//2, i % 2].grid()
-
-
-
-plt.show()
-
+for i in plt.get_fignums():
+    plt.show()
+    
