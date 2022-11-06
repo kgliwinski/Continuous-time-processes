@@ -42,7 +42,7 @@ for i in range(len(T)):
 
     axis[1].plot(np.real(roots[i]), np.imag(roots[i]), 'bo')
     axis[1].grid()
-    figure.savefig('figure%d.png' % i)
+    figure.savefig('lab1_docs/figure%d.png' % i)
 
 for i in plt.get_fignums():
     plt.show()

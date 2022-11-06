@@ -18,24 +18,25 @@ t = list()
 y = list()
 x = list()
 
-figure, axis = plt.subplots((len(K) // 2), 2)
-figure.subplots_adjust(hspace=1.2)
-
 time = np.linspace(0., 150., num=2500, endpoint=False)
 u = np.sin(w0 * time)
 
 print(K)
 
 for i in range(len(K)):
+    plt.figure(i)
     tp, yp, xp = signal.lsim(K[i], T=time, U=u)
     t.append(tp)
     y.append(yp)
     x.append(xp)
 
-    axis[i//2, i % 2].plot(t[i], y[i])
-    axis[i//2, i % 2].set_xlabel('Time [s]')
-    axis[i//2, i % 2].set_ylabel('Amplitude')
-    axis[i//2, i % 2].set_title("k = '%f', T = '%f'" %( k[i], T[i]))
-    axis[i//2, i % 2].grid()
+    plt.plot(t[i], y[i], 'b')
+    plt.plot(t[i], u, 'r')
+    plt.xlabel('Time [s]')
+    plt.ylabel('Amplitude')
+    plt.title("k = '%f', T = '%f'" %(k[i], T[i]))
+    plt.grid()
+    plt.savefig('lab2_docs/figure%d.png' % i)
 
-plt.show()
+for i in plt.get_fignums():
+    plt.show()
