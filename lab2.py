@@ -17,26 +17,45 @@ w0 = 0.8
 t = list()
 y = list()
 x = list()
-
-time = np.linspace(0., 150., num=2500, endpoint=False)
+A = list()
+w = list()
+time = np.linspace(0., 150., num=1500, endpoint=False)
 u = np.sin(w0 * time)
 
-print(K)
+# print(K)
 
 for i in range(len(K)):
     plt.figure(i)
     tp, yp, xp = signal.lsim(K[i], T=time, U=u)
+    
     t.append(tp)
     y.append(yp)
     x.append(xp)
+    A.append((yp[1000:].max() - yp[1000:].min()) / 2)
 
-    plt.plot(t[i], y[i], 'b')
-    plt.plot(t[i], u, 'r')
+    # w.append(abs(z1 - z0) / np.pi)
+
+    plt.plot(t[i], y[i], 'r', label='Char. wyjściowa')
+    plt.plot(t[i], u, 'b', label='Pobudzenie')
     plt.xlabel('Time [s]')
     plt.ylabel('Amplitude')
-    plt.title("k = '%f', T = '%f'" %(k[i], T[i]))
+    plt.title(r"k = %f, T = %f, A = %f " %(k[i], T[i], A[i]))
     plt.grid()
+    plt.legend()
     plt.savefig('lab2_docs/figure%d.png' % i)
+
+P = k[3] / (T[3] * w0 * 1j  + 1) 
+
+plt.figure(len(K))
+w, H = signal.freqresp(K[3])
+plt.plot(H.real, H.imag, "b", label="Charakterystyka")
+plt.plot(P.real, P.imag, "r", marker = "o", markersize=10, label=r"Punkt odp. pulsacji $\omega_0 $")
+plt.xlabel('Re')
+plt.ylabel('Im')
+plt.legend()
+plt.grid()
+plt.title(r"char. amplitudowo-fazowa układu nr 4, punkt: $ \omega_0 = %f + %fj $" %(P.real, P.imag))
+plt.savefig('lab2_docs/figure%d.png' % (len(K)))
 
 for i in plt.get_fignums():
     plt.show()
