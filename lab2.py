@@ -43,7 +43,8 @@ for i in range(len(K)):
         plt.plot(t[f], u[s], 'b', label='Pobudzenie')
         plt.xlabel('Time [s]')
         plt.ylabel('Amplitude')
-        plt.title(r"k = %f, T = %f, A = %f, $\omega_0 = %f$" %(k[i], T[i], A[i], w0[s]))
+        plt.title(r"k = %f, T = %f, A = %f, $\omega_0 = %f$" %
+                  (k[i], T[i], A[i], w0[s]))
         plt.grid()
         plt.legend()
         plt.savefig('lab2_docs/figure%d.png' % f)
@@ -51,15 +52,17 @@ for i in range(len(K)):
 takenIndex = 2
 P = list()
 P.append(k[takenIndex] / (T[takenIndex] * w0[0] * 1j + 1))
-P.append(k[takenIndex] / (T[takenIndex] * w0[1] * 1j + 1)) 
+P.append(k[takenIndex] / (T[takenIndex] * w0[1] * 1j + 1))
 
 print(P)
 
 plt.figure(len(K) * 2)
 w, H = signal.freqresp(K[takenIndex])
 plt.plot(H.real, H.imag, "b", label="Charakterystyka")
-plt.plot(P[0].real, P[0].imag, "r", marker = "o", markersize=10, label=r"Punkt odp. pulsacji $\omega_0 = %f$" % w0[0])
-plt.plot(P[1].real, P[1].imag, "g", marker = "o", markersize=10, label=r"Punkt odp. pulsacji $\omega_0 = %f$" % w0[1])
+plt.plot(P[0].real, P[0].imag, "r", marker="o", markersize=10,
+         label=r"Punkt odp. pulsacji $\omega_0 = %f$" % w0[0])
+plt.plot(P[1].real, P[1].imag, "g", marker="o", markersize=10,
+         label=r"Punkt odp. pulsacji $\omega_0 = %f$" % w0[1])
 plt.xlabel('Re')
 plt.ylabel('Im')
 plt.legend()
