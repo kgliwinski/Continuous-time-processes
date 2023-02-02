@@ -1,6 +1,8 @@
+# %%
 from scipy import signal
 import numpy as np
 import matplotlib.pyplot as plt
+
 # Discrete transfer function
 # will use the signal.TransferFunction method
 # on discrete systems
@@ -28,8 +30,8 @@ time = 100.  # s
 
 for i, k in enumerate(l):
     tp, yp = signal.dstep(k, n=50)
-    plt.figure(i)
-    plt.step(tp, np.squeeze(yp),where = "post", c='r', label='Char. wyjściowa')
+    fig = plt.figure(i)
+    plt.step(tp, np.squeeze(yp), where="post", c='r', label='Char. wyjściowa')
     plt.xlabel('Time [s]')
     plt.ylabel('Amplitude')
     plt.title(r"")
@@ -39,3 +41,4 @@ for i, k in enumerate(l):
 
 for i in plt.get_fignums():
     plt.show()
+
